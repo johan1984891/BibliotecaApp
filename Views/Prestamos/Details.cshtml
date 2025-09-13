@@ -1,0 +1,59 @@
+﻿@model BibliotecaApp.Models.Prestamo
+
+@{
+    ViewData["Title"] = "Detalles de Préstamo";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-book me-2"></i>Detalles de Préstamo
+                </h3>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Libro:</dt>
+                    <dd class="col-sm-8">@Model.Libro?.Titulo</dd>
+
+                    <dt class="col-sm-4">Solicitante:</dt>
+                    <dd class="col-sm-8">@Model.Solicitante</dd>
+
+                    <dt class="col-sm-4">Fecha de Préstamo:</dt>
+                    <dd class="col-sm-8">@Model.FechaPrestamo.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">Devolución Estimada:</dt>
+                    <dd class="col-sm-8">@Model.FechaDevolucionEstimada.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">Devolución Real:</dt>
+                    <dd class="col-sm-8">@(Model.FechaDevolucionReal?.ToShortDateString() ?? "Pendiente")</dd>
+
+                    <dt class="col-sm-4">Estado:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Estado == "Activo" ? "success" : Model.Estado == "Devuelto" ? "secondary" : "danger")">
+                            @Model.Estado
+                        </span>
+                    </dd>
+
+                    @if (Model.Estado == "Atrasado")
+                    {
+                        <dt class="col-sm-4">Días de atraso:</dt>
+                        <dd class="col-sm-8 text-danger">
+                            @((DateTime.Today - Model.FechaDevolucionEstimada).Days) días
+                        </dd>
+                    }
+                </dl>
+
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Editar
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

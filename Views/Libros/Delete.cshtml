@@ -1,0 +1,137 @@
+﻿@model BibliotecaApp.Models.Libro
+
+@{
+    ViewData["Title"] = "Eliminar Libro";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h3 class="card-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Eliminar Libro
+                </h3>
+            </div>
+            <div class="card-body">
+                <h4 class="text-danger">¿Estás seguro de que quieres eliminar este libro?</h4>
+
+                <div class="alert alert-warning">
+                    <i class="fas fa-warning me-2"></i>
+                    <strong>Advertencia:</strong> Esta acción no se puede deshacer. Si este libro tiene préstamos o reservas asociadas, no podrá ser eliminado.
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <dl class="row">
+                            <dt class="col-sm-4">Título:</dt>
+                            <dd class="col-sm-8">@Model.Titulo</dd>
+
+                            <dt class="col-sm-4">Autor:</dt>
+                            <dd class="col-sm-8">@Model.Autor</dd>
+
+                            <dt class="col-sm-4">ISBN:</dt>
+                            <dd class="col-sm-8">@(Model.ISBN ?? "No especificado")</dd>
+
+                            <dt class="col-sm-4">Año de Publicación:</dt>
+                            <dd class="col-sm-8">@Model.AnioPublicacion</dd>
+
+                            <dt class="col-sm-4">Editorial:</dt>
+                            <dd class="col-sm-8">@(Model.Editorial ?? "No especificada")</dd>
+
+                            <dt class="col-sm-4">Género:</dt>
+                            <dd class="col-sm-8">@(Model.Genero ?? "No especificado")</dd>
+
+                            <dt class="col-sm-4">Ejemplares Disponibles:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-@(Model.EjemplaresDisponibles > 0 ? "success" : "danger")">
+                                    @Model.EjemplaresDisponibles
+                                </span>
+                            </dd>
+
+                            <dt class="col-sm-4">Estado:</dt>
+                            <dd class="col-sm-8">
+                                @if (Model.EjemplaresDisponibles > 0)
+                                {
+                                    <span class="badge bg-success">Disponible</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Agotado</span>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <img src="@Model.ImagenUrl" class="img-fluid rounded shadow-sm" alt="@Model.Titulo"
+                             style="max-height: 250px; object-fit: cover; margin-bottom: 1rem;">
+
+                        @if (!string.IsNullOrEmpty(Model.Descripcion))
+                        {
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">Descripción</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text small">@Model.Descripcion</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Información:</strong>
+                    @if (Model.Prestamos?.Count > 0)
+                    {
+                        <span>Tiene @Model.Prestamos.Count préstamos activos asociados. </span>
+                    }
+                    @if (Model.Reservas?.Count > 0)
+                    {
+                        <span>Tiene @Model.Reservas.Count reservas activas asociadas.</span>
+                    }
+                    @if (Model.Prestamos?.Count == 0 && Model.Reservas?.Count == 0)
+                    {
+                        <span>No tiene préstamos ni reservas asociadas.</span>
+                    }
+                </div>
+
+                <form asp-action="Delete" class="mt-4">
+                    <input type="hidden" asp-for="Id" />
+
+                    @if (Model.Prestamos?.Count > 0 || Model.Reservas?.Count > 0)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-ban me-2"></i>
+                            <strong>No se puede eliminar:</strong> Este libro tiene préstamos o reservas activas asociadas.
+                        </div>
+                        <button type="submit" class="btn btn-danger" disabled>
+                            <i class="fas fa-trash me-2"></i>No se puede eliminar
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás completamente seguro de eliminar este libro? Esta acción es irreversible.')">
+                            <i class="fas fa-trash me-2"></i>Eliminar Definitivamente
+                        </button>
+                    }
+
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Confirmación adicional para eliminación
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!confirm('¿Estás completamente seguro de eliminar este libro? Esta acción es irreversible.')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}

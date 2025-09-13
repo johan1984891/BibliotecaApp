@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BibliotecaApp.Models.Libro>
+@{
+    ViewData["Title"] = "Colección de Libros";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="display-6">Nuestra Colección</h1>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Agregar Libro
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control" name="searchString"
+                       value="@ViewData["CurrentFilter"]" placeholder="Buscar por título o autor...">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>No se encontraron libros en la colección.
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="@item.ImagenUrl" class="card-img-top" alt="@item.Titulo"
+                         style="height: 250px; object-fit: cover; background-color: #f8f9fa;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Titulo</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Autor</h6>
+                        <p class="card-text text-muted small">
+                        <p class="card-text text-muted small">@item.Genero · @item.AnioPublicacion</p>
+                        </p>
+                        <p class="card-text">
+                            @(item.Descripcion?.Length > 100 ? item.Descripcion.Substring(0, 100) + "..." : item.Descripcion)
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="badge bg-@(item.EjemplaresDisponibles > 0 ? "success" : "danger")">
+                                <i class="fas fa-book me-1"></i>
+                                @item.EjemplaresDisponibles Disponibles
+                            </span>
+
+                            <div class="btn-group">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+
+                                @if (item.EjemplaresDisponibles > 0)
+                                {
+                                    <a asp-controller="Prestamos" asp-action="Create" asp-route-libroId="@item.Id"
+                                       class="btn btn-sm btn-success">
+                                        <i class="fas fa-book"></i> Prestar
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Reservas" asp-action="Create" asp-route-libroId="@item.Id"
+                                       class="btn btn-sm btn-warning">
+                                        <i class="fas fa-calendar-check"></i> Reservar
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

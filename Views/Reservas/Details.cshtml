@@ -1,0 +1,48 @@
+﻿@model BibliotecaApp.Models.Reserva
+
+@{
+    ViewData["Title"] = "Detalles de Reserva";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-calendar-check me-2"></i>Detalles de Reserva
+                </h3>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Libro:</dt>
+                    <dd class="col-sm-8">@Model.Libro?.Titulo</dd>
+
+                    <dt class="col-sm-4">Solicitante:</dt>
+                    <dd class="col-sm-8">@Model.Solicitante</dd>
+
+                    <dt class="col-sm-4">Fecha de Reserva:</dt>
+                    <dd class="col-sm-8">@Model.FechaReserva.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">Fecha de Vencimiento:</dt>
+                    <dd class="col-sm-8">@Model.FechaVencimiento.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">Estado:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Estado == "Activa" ? "warning" : Model.Estado == "Completada" ? "success" : "secondary")">
+                            @Model.Estado
+                        </span>
+                    </dd>
+                </dl>
+
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Editar
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

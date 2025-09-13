@@ -1,0 +1,50 @@
+﻿@model BibliotecaApp.Models.Reserva
+
+@{
+    ViewData["Title"] = "Eliminar Reserva";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h3 class="card-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Eliminar Reserva
+                </h3>
+            </div>
+            <div class="card-body">
+                <h4 class="text-danger">¿Estás seguro de que quieres eliminar esta reserva?</h4>
+
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-warning me-2"></i>
+                    <strong>Advertencia:</strong> Esta acción no se puede deshacer.
+                </div>
+
+                <dl class="row mt-4">
+                    <dt class="col-sm-4">Libro:</dt>
+                    <dd class="col-sm-8">@Model.Libro?.Titulo</dd>
+
+                    <dt class="col-sm-4">Solicitante:</dt>
+                    <dd class="col-sm-8">@Model.Solicitante</dd>
+
+                    <dt class="col-sm-4">Estado:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Estado == "Activa" ? "warning" : Model.Estado == "Completada" ? "success" : "secondary")">
+                            @Model.Estado
+                        </span>
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete" class="mt-4">
+                    <input type="hidden" asp-for="Id" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>Eliminar Definitivamente
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Cancelar
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

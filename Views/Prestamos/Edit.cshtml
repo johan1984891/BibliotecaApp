@@ -1,0 +1,78 @@
+﻿@model BibliotecaApp.Models.Prestamo
+
+@{
+    ViewData["Title"] = "Editar Préstamo";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-edit me-2"></i>Editar Préstamo
+                </h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="LibroId" class="control-label">Libro</label>
+                        <select asp-for="LibroId" class="form-control" asp-items="ViewBag.Libros">
+                            <option value="">-- Seleccionar Libro --</option>
+                        </select>
+                        <span asp-validation-for="LibroId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Solicitante" class="control-label"></label>
+                        <input asp-for="Solicitante" class="form-control" />
+                        <span asp-validation-for="Solicitante" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FechaPrestamo" class="control-label"></label>
+                        <input asp-for="FechaPrestamo" type="date" class="form-control" />
+                        <span asp-validation-for="FechaPrestamo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FechaDevolucionEstimada" class="control-label"></label>
+                        <input asp-for="FechaDevolucionEstimada" type="date" class="form-control" />
+                        <span asp-validation-for="FechaDevolucionEstimada" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FechaDevolucionReal" class="control-label"></label>
+                        <input asp-for="FechaDevolucionReal" type="date" class="form-control" />
+                        <span asp-validation-for="FechaDevolucionReal" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Estado" class="control-label"></label>
+                        <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
+                            <option value="">-- Seleccionar Estado --</option>
+                        </select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Guardar Cambios
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,93 @@
+﻿@model BibliotecaApp.Models.Reserva
+
+@{
+    ViewData["Title"] = "Nueva Reserva";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-calendar-check me-2"></i>Nueva Reserva
+                </h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="LibroId" class="control-label">Libro *</label>
+                        <select asp-for="LibroId" class="form-control" asp-items="ViewBag.Libros" required>
+                            <option value="">-- Seleccionar Libro --</option>
+                        </select>
+                        <span asp-validation-for="LibroId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Solicitante" class="control-label">Solicitante *</label>
+                        <input asp-for="Solicitante" class="form-control" placeholder="Nombre completo del solicitante" required />
+                        <span asp-validation-for="Solicitante" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="FechaReserva" class="control-label">Fecha de Reserva *</label>
+                        <input asp-for="FechaReserva" type="date" class="form-control" required />
+                        <span asp-validation-for="FechaReserva" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="FechaVencimiento" class="control-label">Fecha de Vencimiento *</label>
+                        <input asp-for="FechaVencimiento" type="date" class="form-control" required />
+                        <span asp-validation-for="FechaVencimiento" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-check me-2"></i>Crear Reserva
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Establecer fechas por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoy = new Date().toISOString().split('T')[0];
+            const en3Dias = new Date();
+            en3Dias.setDate(en3Dias.getDate() + 3);
+            const fecha3Dias = en3Dias.toISOString().split('T')[0];
+
+            // Establecer valores por defecto si están vacíos
+            if (!document.getElementById('FechaReserva').value) {
+                document.getElementById('FechaReserva').value = hoy;
+            }
+
+            if (!document.getElementById('FechaVencimiento').value) {
+                document.getElementById('FechaVencimiento').value = fecha3Dias;
+            }
+
+            // Validar que la fecha de vencimiento sea posterior a la de reserva
+            document.getElementById('FechaVencimiento').addEventListener('change', function() {
+                const fechaReserva = new Date(document.getElementById('FechaReserva').value);
+                const fechaVencimiento = new Date(this.value);
+
+                if (fechaVencimiento <= fechaReserva) {
+                    alert('La fecha de vencimiento debe ser posterior a la fecha de reserva.');
+                    this.value = fecha3Dias;
+                }
+            });
+        });
+    </script>
+}

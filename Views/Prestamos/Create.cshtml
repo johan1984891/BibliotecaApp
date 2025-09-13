@@ -1,0 +1,93 @@
+﻿@model BibliotecaApp.Models.Prestamo
+
+@{
+    ViewData["Title"] = "Nuevo Préstamo";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-book me-2"></i>Nuevo Préstamo
+                </h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="LibroId" class="control-label">Libro *</label>
+                        <select asp-for="LibroId" class="form-control" asp-items="ViewBag.Libros" required>
+                            <option value="">-- Seleccionar Libro --</option>
+                        </select>
+                        <span asp-validation-for="LibroId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Solicitante" class="control-label">Solicitante *</label>
+                        <input asp-for="Solicitante" class="form-control" placeholder="Nombre completo del solicitante" required />
+                        <span asp-validation-for="Solicitante" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="FechaPrestamo" class="control-label">Fecha de Préstamo *</label>
+                        <input asp-for="FechaPrestamo" type="date" class="form-control" required />
+                        <span asp-validation-for="FechaPrestamo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="FechaDevolucionEstimada" class="control-label">Fecha de Devolución Estimada *</label>
+                        <input asp-for="FechaDevolucionEstimada" type="date" class="form-control" required />
+                        <span asp-validation-for="FechaDevolucionEstimada" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check me-2"></i>Registrar Préstamo
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Establecer fechas por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoy = new Date().toISOString().split('T')[0];
+            const en14Dias = new Date();
+            en14Dias.setDate(en14Dias.getDate() + 14);
+            const fecha14Dias = en14Dias.toISOString().split('T')[0];
+
+            // Establecer valores por defecto si están vacíos
+            if (!document.getElementById('FechaPrestamo').value) {
+                document.getElementById('FechaPrestamo').value = hoy;
+            }
+
+            if (!document.getElementById('FechaDevolucionEstimada').value) {
+                document.getElementById('FechaDevolucionEstimada').value = fecha14Dias;
+            }
+
+            // Validar que la fecha de devolución sea posterior a la de préstamo
+            document.getElementById('FechaDevolucionEstimada').addEventListener('change', function() {
+                const fechaPrestamo = new Date(document.getElementById('FechaPrestamo').value);
+                const fechaDevolucion = new Date(this.value);
+
+                if (fechaDevolucion <= fechaPrestamo) {
+                    alert('La fecha de devolución debe ser posterior a la fecha de préstamo.');
+                    this.value = fecha14Dias;
+                }
+            });
+        });
+    </script>
+}

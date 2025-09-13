@@ -1,0 +1,69 @@
+﻿@model BibliotecaApp.Models.Libro
+
+@{
+    ViewData["Title"] = "Detalles del Libro";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Detalles del Libro</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4">
+                        <img src="@Model.ImagenUrl" class="img-fluid rounded shadow" alt="@Model.Titulo"
+                             style="max-height: 300px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <h2>@Model.Titulo</h2>
+                        <h5 class="text-muted">por @Model.Autor</h5>
+
+                        <div class="mt-4">
+                            <dl class="row">
+                                <dt class="col-sm-3">ISBN:</dt>
+                                <dd class="col-sm-9">@Model.ISBN</dd>
+
+                                <dt class="col-sm-3">Año de Publicación:</dt>
+                                <dd class="col-sm-9">@Model.AnioPublicacion</dd>
+
+                                <dt class="col-sm-3">Editorial:</dt>
+                                <dd class="col-sm-9">@Model.Editorial</dd>
+
+                                <dt class="col-sm-3">Género:</dt>
+                                <dd class="col-sm-9">
+                                    <span class="badge bg-info">@Model.Genero</span>
+                                </dd>
+
+                                <dt class="col-sm-3">Disponibilidad:</dt>
+                                <dd class="col-sm-9">
+                                    <span class="badge bg-@(Model.EjemplaresDisponibles > 0 ? "success" : "danger")">
+                                        @Model.EjemplaresDisponibles ejemplares disponibles
+                                    </span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5>Descripción</h5>
+                    <p class="text-muted">@Model.Descripcion</p>
+                </div>
+
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Editar
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>Eliminar
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

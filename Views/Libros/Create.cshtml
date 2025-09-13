@@ -1,0 +1,130 @@
+﻿@model BibliotecaApp.Models.Libro
+
+@{
+    ViewData["Title"] = "Agregar Nuevo Libro";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-custom">
+            <div class="card-header">
+                <h3 class="card-title gradient-text">
+                    <i class="fas fa-plus-circle me-2"></i>Agregar Nuevo Libro
+                </h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Titulo" class="control-label">Título *</label>
+                                <input asp-for="Titulo" class="form-control" placeholder="Ingrese el título del libro" />
+                                <span asp-validation-for="Titulo" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Autor" class="control-label">Autor *</label>
+                                <input asp-for="Autor" class="form-control" placeholder="Nombre completo del autor" />
+                                <span asp-validation-for="Autor" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="ISBN" class="control-label">ISBN</label>
+                                <input asp-for="ISBN" class="form-control" placeholder="Ej: 978-8437604947" />
+                                <span asp-validation-for="ISBN" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="AnioPublicacion" class="control-label">Año de Publicación *</label>
+                                <input asp-for="AnioPublicacion" type="number" class="form-control"
+                                       min="1000" max="2025" value="@DateTime.Now.Year" />
+                                <span asp-validation-for="AnioPublicacion" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Editorial" class="control-label">Editorial</label>
+                                <input asp-for="Editorial" class="form-control" placeholder="Nombre de la editorial" />
+                                <span asp-validation-for="Editorial" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Genero" class="control-label">Género</label>
+                                <input asp-for="Genero" class="form-control" placeholder="Ej: Novela, Ciencia Ficción, etc." />
+                                <span asp-validation-for="Genero" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="EjemplaresDisponibles" class="control-label">Ejemplares Disponibles</label>
+                                <input asp-for="EjemplaresDisponibles" class="form-control" value="1" min="0" />
+                                <span asp-validation-for="EjemplaresDisponibles" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="ImagenUrl" class="control-label">URL de Imagen</label>
+                                <input asp-for="ImagenUrl" class="form-control" placeholder="Ej: /img/libro.jpg" />
+                                <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+                                <small class="form-text text-muted">Dejar vacío para usar imagen por defecto</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Descripcion" class="control-label">Descripción</label>
+                        <textarea asp-for="Descripcion" class="form-control" rows="4" placeholder="Breve descripción o sinopsis del libro..."></textarea>
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-2"></i>Guardar Libro
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Script simplificado ya que ahora es number
+            const añoInput = document.getElementById('AnioPublicacion');
+            if (añoInput && !añoInput.value) {
+                añoInput.value = new Date().getFullYear();
+            }
+
+            // Placeholders automáticos para mejor UX
+            const isbnInput = document.getElementById('ISBN');
+            if (isbnInput && !isbnInput.value) {
+                isbnInput.placeholder = '978-8437604947';
+            }
+
+            const imagenInput = document.getElementById('ImagenUrl');
+            if (imagenInput && !imagenInput.value) {
+                imagenInput.placeholder = '/img/nombre-del-libro.jpg';
+            }
+
+            // Validación de ejemplares
+            const ejemplaresInput = document.getElementById('EjemplaresDisponibles');
+            if (ejemplaresInput) {
+                ejemplaresInput.addEventListener('change', function() {
+                    if (this.value < 0) {
+                        this.value = 0;
+                    }
+                });
+            }
+        });
+    </script>
+}

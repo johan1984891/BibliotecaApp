@@ -1,0 +1,289 @@
+:root {
+    --primary-color: #421545;
+    --primary-light: #6a3d6d;
+    --primary-dark: #2d0e30;
+    --secondary-color: #8a5c8d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gradient-start: #421545;
+    --gradient-end: #6a3d6d;
+}
+
+/* Layout para sticky footer */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #faf7fc 0%, #f0eaf2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
+    padding-bottom: 2rem;
+}
+
+/* Footer sticky */
+.footer {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    color: white;
+    padding: 1.5rem 0;
+    margin-top: auto;
+    border-top: 3px solid var(--primary-light);
+    box-shadow: 0 -4px 12px rgba(66, 21, 69, 0.1);
+    flex-shrink: 0;
+}
+
+.footer-content {
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Navbar mejorado */
+.navbar {
+    box-shadow: 0 2px 15px rgba(66, 21, 69, 0.1);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%) !important;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+    margin: 0 0.2rem;
+}
+
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-1px);
+    }
+
+/* Hero section mejorada */
+.hero-section {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: white;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    padding: 3rem 0;
+    box-shadow: 0 10px 30px rgba(66, 21, 69, 0.2);
+}
+
+    .hero-section h1 {
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+/* Cards mejoradas */
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(66, 21, 69, 0.1);
+    background: white;
+}
+
+    .card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(66, 21, 69, 0.2);
+    }
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+
+/* Botones mejorados */
+.btn {
+    border-radius: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(66, 21, 69, 0.3);
+    }
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+    .btn-outline-primary:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+/* Tablas mejoradas */
+.table {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(66, 21, 69, 0.1);
+}
+
+    .table th {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 1rem;
+    }
+
+    .table td {
+        padding: 0.75rem;
+        vertical-align: middle;
+        border-color: #f0eaf2;
+    }
+
+.table-hover tbody tr:hover {
+    background-color: rgba(66, 21, 69, 0.05);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+/* Badges mejorados */
+.badge {
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8em;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%) !important;
+}
+
+/* Formularios mejorados */
+.form-control {
+    border-radius: 0.75rem;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.3rem rgba(66, 21, 69, 0.2);
+        transform: translateY(-1px);
+    }
+
+.form-label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* Alertas mejoradas */
+.alert {
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #28a745 0%, #34ce57 100%);
+    color: white;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #e4606d 100%);
+    color: white;
+}
+
+/* Efectos especiales */
+.shadow-custom {
+    box-shadow: 0 10px 30px rgba(66, 21, 69, 0.15) !important;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 0;
+        margin: 1rem 0;
+    }
+
+    .card {
+        margin-bottom: 1.5rem;
+    }
+
+    .table-responsive {
+        border-radius: 0.75rem;
+    }
+
+    .footer {
+        padding: 1rem 0;
+    }
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card, .table, .alert {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+    }
